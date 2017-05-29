@@ -9,6 +9,7 @@ def read_spam_html(csv_dict_writer,spam_page_url):
     file = codecs.open(spam_page_url,encoding="utf-8")
     soup = BeautifulSoup(file.read(),"html.parser")
     comment_list = soup.find_all("tr")
+    word_dict = {}
     for comment in comment_list:
         result_dict = {}
         # All these filters are for a certain numbered id, which all comments have
@@ -59,12 +60,21 @@ def read_spam_html(csv_dict_writer,spam_page_url):
                 result_dict["Submit Day"] = str(time_list[0].split("/")[2])
                 result_dict["Comment"] = str(td_list[1].p.find_all(text=True)[0])
 
+                for word in result_dict["Comment"].split():
+                    if word in word_dict:
+                        word_dict[word] += 1
+                    else :
+                        word_dict[word] = 1
+
                 # Getting post that comment was made on
                 response_div = td_list[2].find_all("div",{"class":"response-links"})[0]
                 post_span = response_div.find_all("span",{"class":"post-com-count-wrapper"})[0]
-                result_dict["Post"] = post_span.a.find_all(text=True)[0]
+                result_dict["Post"] = str(post_span.a.find_all(text=True)[0])
                                     
                 csv_dict_writer.writerow(result_dict)
+    # Very minor word count stuff [TEMP]
+    for key in word_dict:
+        print(key.replace('\U0001f609',':D') , " " , word_dict[key])
     
 
 
