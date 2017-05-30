@@ -38,7 +38,6 @@ def read_spam_html(csv_dict_writer,spam_page_url):
                 result_dict["IP Address"] = ""
                 author_a_list = td_list[0].find_all("a")
                 for a_tag in author_a_list:
-                    #print(str(a_tag.get("href")))
                     if a_tag.get("title") is not None:
                         result_dict["Website"] = str(a_tag.get("href"))
                     
@@ -61,6 +60,7 @@ def read_spam_html(csv_dict_writer,spam_page_url):
                 result_dict["Comment"] = str(td_list[1].p.find_all(text=True)[0])
 
                 for word in result_dict["Comment"].split():
+                    word = re.sub("[\?\.,\“!\"\”]","",word)
                     if word in word_dict:
                         word_dict[word] += 1
                     else :
@@ -74,7 +74,7 @@ def read_spam_html(csv_dict_writer,spam_page_url):
                 csv_dict_writer.writerow(result_dict)
     # Very minor word count stuff [TEMP]
     for key in word_dict:
-        print(key.replace('\U0001f609',':D') , " " , word_dict[key])
+        print(key.replace('\U0001f609',':D') , word_dict[key])
     
 
 
