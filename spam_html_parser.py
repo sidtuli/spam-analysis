@@ -19,7 +19,7 @@ def read_spam_html(csv_dict_writer,spam_page_url):
             if(comment_number is not None):
 
                 # Getting comment number
-                comment_number = int(comment_number.group())
+                comment_number = int(comment_number.group()) - 1
                 
                 result_dict["Comment Number"] = comment_number
 
@@ -59,22 +59,12 @@ def read_spam_html(csv_dict_writer,spam_page_url):
                 result_dict["Submit Day"] = str(time_list[0].split("/")[2])
                 result_dict["Comment"] = str(td_list[1].p.find_all(text=True)[0])
 
-                for word in result_dict["Comment"].split():
-                    word = re.sub("[\?\.,\“!\"\”]","",word)
-                    if word in word_dict:
-                        word_dict[word] += 1
-                    else :
-                        word_dict[word] = 1
-
                 # Getting post that comment was made on
                 response_div = td_list[2].find_all("div",{"class":"response-links"})[0]
                 post_span = response_div.find_all("span",{"class":"post-com-count-wrapper"})[0]
                 result_dict["Post"] = str(post_span.a.find_all(text=True)[0])
                                     
                 csv_dict_writer.writerow(result_dict)
-    # Very minor word count stuff [TEMP]
-    for key in word_dict:
-        print(key.replace('\U0001f609',':D') , word_dict[key])
     
 
 
