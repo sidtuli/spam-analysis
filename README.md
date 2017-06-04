@@ -13,6 +13,6 @@ A curiosity project to analyze over 2,800 comments that cropped up in a wordpres
 ### To Do List
 * ~~Find best tool to display findings: Python Notebooks, d3/web, or R~~
 ###### Work on areas of analysis: 
-* Word Counts, IP Address Count, Author Counts, Time of Highest Use, Overall Grammar, Topic Occurrences ...
+* ~~Word Counts, IP Address Count, Author Counts,~~ Time of Highest Use, Overall Grammar, Topic Occurrences ...
 * Figure out small sanitization quirks of the comments
 * Figure out useful visualizations
