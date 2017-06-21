@@ -9,7 +9,7 @@ A curiosity project to analyze over 2,800 comments that cropped up in a wordpres
 ###### For data analysis
 * Anaconda 3 (4.4.0) [link](https://www.continuum.io/downloads)
 * Jupyter Notebook 5.0.0 [link](http://jupyter.org/install.html)
-* language-check 1.0 [link](https://pypi.python.org/pypi/language-check)[Github](https://github.com/myint/language-check)
+* After the Deadline API [link](http://www.afterthedeadline.com/api.slp)
 
 ### To Do List
 * ~~Find best tool to display findings: Python Notebooks, d3/web, or R~~

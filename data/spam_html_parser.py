@@ -2,8 +2,8 @@ from bs4 import BeautifulSoup
 import csv
 import re
 import codecs
-
-
+import requests
+from time import sleep
 
 def read_spam_html(csv_dict_writer,spam_page_url):
     file = codecs.open(spam_page_url,encoding="utf-8")
@@ -57,19 +57,32 @@ def read_spam_html(csv_dict_writer,spam_page_url):
                 result_dict["Submit Year"] = str(time_list[0].split("/")[0])
                 result_dict["Submit Month"] = str(time_list[0].split("/")[1])
                 result_dict["Submit Day"] = str(time_list[0].split("/")[2])
-                result_dict["Comment"] = str(td_list[1].p.find_all(text=True)[0])
+
+                comment = str(td_list[1].p.find_all(text=True)[0])
+                result_dict["Comment"] = comment
 
                 # Getting post that comment was made on
                 response_div = td_list[2].find_all("div",{"class":"response-links"})[0]
                 post_span = response_div.find_all("span",{"class":"post-com-count-wrapper"})[0]
                 result_dict["Post"] = str(post_span.a.find_all(text=True)[0])
-                                    
+
+                # Getting grammar check content
+                r = requests.post("http://service.afterthedeadline.com/checkDocument", data={'key':"spam-parse12345678912345678912345678912345", 'data': comment})
+                print(r.status_code, r.reason)
+                sleep(1)
+                                  
+                while(r.status_code == 503):
+                    sleep(1)
+                    r = requests.post("http://service.afterthedeadline.com/checkDocument", data={'key':"spam-parse12345678912345678912345678912345", 'data': comment})
+                    print(r.status_code, r.reason)
+                result_dict["Grammar Check"] = r.text
+                                      
                 csv_dict_writer.writerow(result_dict)
     
 
 
 with codecs.open('spam_data.csv','w',encoding="utf-8") as file:
-    fieldnames = ['Comment Number',"Author","Website","Email","IP Address","Submit Time","Submit Year","Submit Month","Submit Day","Comment","Post"]
+    fieldnames = ['Comment Number',"Author","Website","Email","IP Address","Submit Time","Submit Year","Submit Month","Submit Day","Comment","Post","Grammar Check"]
     writer = csv.DictWriter(file, fieldnames=fieldnames)
 
     writer.writeheader()
