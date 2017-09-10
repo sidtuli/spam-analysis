@@ -1,0 +1,5 @@
+1. Explore all IP address locations and possibly map them
+2. Map all comments to the local time for each of their respective Ip addresses
+3. Further discuss the patterns the comments display in, i.e. how they may be generated. Maybe further analyze the grammar and writing errors made in them.
+4. Create more histograms to show the time attributes of the comments. Show number over certain times of the day, months, and overall scale of time for the comments since the blog began.
+5. Give more information in the intro and conclusion of the write up. Maybe give more background on why it was done in the introduction and more final observations in the conclusion.
