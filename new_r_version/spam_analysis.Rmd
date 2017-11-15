@@ -1,0 +1,27 @@
+---
+title: "6500+ Spam Comments"
+author: "Sidhanth Tuli"
+date: "November 13, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+data <- read.csv("spam_data.csv",header = TRUE)
+```
+
+```{r}
+month_data = rep(c(data$Submit.Month))
+as.data.frame(table(month_data))
+```
+
+```{r}
+ip_data = rep(data$IP.Address,c(data$IP.Address))
+ip_frame = as.data.frame(table(ip_data))
+ip_frame [
+  with(ip_frame,rev(order(Freq))),
+]
+```
